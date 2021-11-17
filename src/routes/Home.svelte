@@ -28,11 +28,10 @@
   });
   onDestroy(queryUnsub);
 
-  async function checkForNewEpisodes() {
+  async function checkForNewEpisodes(force = false) {
     const lastUpdate = localStorage.getItem('lastUpdate');
-    console.log('lastUpdate', lastUpdate, differenceInMinutes(new Date(), new Date(lastUpdate)));
 
-    if (!lastUpdate || differenceInMinutes(new Date(), new Date(lastUpdate)) > 60) {
+    if (force || !lastUpdate || differenceInMinutes(new Date(), new Date(lastUpdate)) > 60) {
       await Core.podcasts.checkForUpdates();
       localStorage.setItem('lastUpdate', new Date().toISOString());
     }
@@ -80,7 +79,17 @@
   }
 </script>
 
-<View headerText="Home">
+<View
+  headerText="Home"
+  menuItems={[
+    {
+      id: 'menu_refresh',
+      label: 'Check for new episodes',
+      closeAfterAction: true,
+      action: () => checkForNewEpisodes(true),
+    },
+  ]}
+>
   <!-- <Typography type="titleSmall">Now Playing</Typography>
   <ListItem
     title="What’s next for USB-C"
