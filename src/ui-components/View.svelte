@@ -52,6 +52,18 @@
     },
     {}
   );
+
+  async function handleAction(menuItem: MenuItem) {
+    if (menuItems.some((a) => a.inProgress) || menuItem.disabled) return;
+
+    menuItems = menuItems.map((a) => (a.id === menuItem.id ? { ...a, inProgress: true } : a));
+    await menuItem.action();
+    menuItems = menuItems.map((a) => (a.id === menuItem.id ? { ...a, inProgress: false } : a));
+
+    if (menuItem.closeAfterAction) {
+      menuOpen = false;
+    }
+  }
 </script>
 
 <div class="root">
@@ -60,12 +72,12 @@
     {#if menuOpen}
       {#each menuItems as menuItem, i}
         <ListItem
-          title={menuItem.label}
+          title={`${menuItem.label}${menuItem.inProgress ? '...' : ''}`}
           selectable={{
             id: `menu_${menuItem.id}`,
             selectedId: selectedMenuId,
             shortcut: i + 1 <= 9 ? i + 1 : undefined,
-            onSelect: menuItem.action,
+            onSelect: () => handleAction(menuItem),
           }}
         />
       {/each}

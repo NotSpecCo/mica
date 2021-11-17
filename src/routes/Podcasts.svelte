@@ -16,8 +16,6 @@
   let selectedId: string;
 
   const queryUnsub = querystring.subscribe((val) => {
-    const id = new URLSearchParams(val).get('selected');
-    console.log('query string id', id);
     selectedId = new URLSearchParams(val).get('selected');
   });
 
@@ -33,6 +31,7 @@
       await Core.podcasts.subscribe({ feedUrl: 'https://feeds.megaphone.fm/vergecast' });
 
       console.log('seed success');
+      podcasts = await Core.podcasts.queryAll({});
     } catch (err) {
       console.error('Failed to seed data', err);
     }
@@ -47,11 +46,17 @@
     {
       id: 'menu_seed',
       label: 'Seed podcasts',
+      closeAfterAction: true,
       action: () => seedData(),
     },
     {
+      id: 'menu_add',
+      label: 'Add podcasts',
+      action: () => console.log('search'),
+    },
+    {
       id: 'menu_import',
-      label: 'Import OPML',
+      label: 'Import OPML file',
       action: () => console.log('import opml'),
     },
   ]}

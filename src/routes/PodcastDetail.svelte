@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { EpisodeExtended, Podcast } from 'foxcasts-core/lib/types';
   import { onDestroy, onMount } from 'svelte';
-  import { push, querystring } from 'svelte-spa-router';
+  import { pop, push, querystring } from 'svelte-spa-router';
   import { Core } from '../services/core';
   import Expandable from '../ui-components/Expandable.svelte';
   import ListItem from '../ui-components/ListItem.svelte';
@@ -21,8 +21,6 @@
 
   let selectedId: string;
   const queryUnsub = querystring.subscribe((val) => {
-    const id = new URLSearchParams(val).get('selected');
-    console.log('query string id', id);
     selectedId = new URLSearchParams(val).get('selected');
   });
   onDestroy(queryUnsub);
@@ -34,7 +32,15 @@
     {
       id: 'menu_unsubscribe',
       label: 'Unsubscribe',
-      action: () => console.log('unsubscribe'),
+      action: () => Core.podcasts.unsubscribe({ id: podcast?.id }).then(() => pop()),
+    },
+    {
+      id: 'menu_favorite',
+      label: podcast?.isFavorite ? 'Remove from favorites' : 'Add to favorites',
+      action: () =>
+        Core.podcasts.update(podcast.id, { isFavorite: podcast?.isFavorite ? 0 : 1 }).then(() => {
+          podcast.isFavorite = podcast?.isFavorite ? 0 : 1;
+        }),
     },
   ]}
 >

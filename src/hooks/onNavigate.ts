@@ -43,12 +43,10 @@ export function onNavigate(
       let newIndex = ev.key === 'ArrowUp' ? index - 1 : index + 1;
 
       if (newIndex <= -1 && ev.key === 'ArrowUp' && !scroll('up')) {
-        console.log('not at top yet');
         selectedId = undefined;
         callbacks.onChange?.(selectedId);
         return;
       } else if (newIndex === elements.length && ev.key === 'ArrowDown' && !scroll('down')) {
-        console.log('not at bottom yet');
         return;
       }
 
