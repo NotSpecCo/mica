@@ -30,6 +30,7 @@
     "date-fns": "^2.25.0",
     "foxcasts-core": "^3.0.0",
     "lodash.kebabcase": "^4.1.1",
+    "lodash.throttle": "^4.1.1",
     "sirv-cli": "^1.0.0",
     "svelte-spa-router": "^3.2.0"
   }

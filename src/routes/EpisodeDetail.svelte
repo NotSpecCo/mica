@@ -3,6 +3,7 @@
   import type { EpisodeExtended } from 'foxcasts-core/lib/types';
   import { onDestroy, onMount } from 'svelte';
   import { querystring } from 'svelte-spa-router';
+  import { load } from '../components/AudioPlayer.svelte';
   import { Core } from '../services/core';
   import Typography from '../ui-components/Typography.svelte';
   import View from '../ui-components/View.svelte';
@@ -29,7 +30,7 @@
     {
       id: 'menu_stream',
       label: episode?.isDownloaded ? 'Play' : 'Stream',
-      action: () => console.log('stream/play episode'),
+      action: () => load(episode.id),
     },
     {
       id: 'menu_favorite',

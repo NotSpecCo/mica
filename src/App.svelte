@@ -2,6 +2,7 @@
   import kebabcase from 'lodash.kebabcase';
   import { onMount } from 'svelte';
   import Router from 'svelte-spa-router';
+  import AudioPlayer from './components/AudioPlayer.svelte';
   import { TextSize } from './models';
   import EpisodeDetail from './routes/EpisodeDetail.svelte';
   import Filter from './routes/Filter.svelte';
@@ -49,6 +50,4 @@
 </script>
 
 <Router {routes} />
-
-<style>
-</style>
+<AudioPlayer />

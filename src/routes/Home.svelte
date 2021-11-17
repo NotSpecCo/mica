@@ -2,10 +2,12 @@
   import { differenceInMinutes, startOfDay } from 'date-fns';
   import { PlaybackStatus } from 'foxcasts-core/lib/enums';
   import type { EpisodeExtended, FilterList, Podcast } from 'foxcasts-core/lib/types';
+  import { formatTime } from 'foxcasts-core/lib/utils';
   import { onDestroy, onMount } from 'svelte';
   import { push, querystring } from 'svelte-spa-router';
   import type { FilterViewOptions } from '../models';
   import { Core } from '../services/core';
+  import { player } from '../stores/player';
   import Link from '../ui-components/Link.svelte';
   import ListItem from '../ui-components/ListItem.svelte';
   import Typography from '../ui-components/Typography.svelte';
@@ -90,16 +92,18 @@
     },
   ]}
 >
-  <!-- <Typography type="titleSmall">Now Playing</Typography>
-  <ListItem
-    title="What’s next for USB-C"
-    subtitle="17:23 / 56:04"
-    selectable={{
-      id: `player`,
-      selectedId,
-      onSelect: () => push(`/player`),
-    }}
-  /> -->
+  {#if $player.episode}
+    <Typography type="titleSmall">Now Playing</Typography>
+    <ListItem
+      title={$player.episode.title}
+      subtitle={`${formatTime($player.currentTime)} / ${formatTime($player.duration || 0)}`}
+      selectable={{
+        id: `player`,
+        selectedId,
+        onSelect: () => push(`/player`),
+      }}
+    />
+  {/if}
   <Typography type="titleSmall">What's new?</Typography>
   {#if !newEpisodes}
     <Typography>Checking for new episodes...</Typography>
