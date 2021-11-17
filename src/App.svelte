@@ -4,6 +4,7 @@
   import Router from 'svelte-spa-router';
   import { TextSize } from './models';
   import EpisodeDetail from './routes/EpisodeDetail.svelte';
+  import Filter from './routes/Filter.svelte';
   import Home from './routes/Home.svelte';
   import PodcastDetail from './routes/PodcastDetail.svelte';
   import PodcastPreview from './routes/PodcastPreview.svelte';
@@ -41,6 +42,7 @@
     '/podcasts': Podcasts,
     '/podcasts/preview': PodcastPreview,
     '/podcasts/:podcastId': PodcastDetail,
+    '/episodes/filter/:filterId': Filter,
     '/episodes/:episodeId': EpisodeDetail,
     '/search': Search,
   };

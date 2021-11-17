@@ -51,9 +51,8 @@
         query: { withinDays: 30, limit: 25 },
         isFavorite: 0,
         viewOptions: {
-          primaryText: 'title',
-          secondaryText: 'podcastTitle',
-          accentText: null,
+          title: 'title',
+          subtitle: 'podcastTitle',
         },
       });
       await Core.filters.add<FilterViewOptions>({
@@ -61,9 +60,8 @@
         query: { isFavorite: 1 },
         isFavorite: 0,
         viewOptions: {
-          primaryText: 'title',
-          secondaryText: 'podcastTitle',
-          accentText: null,
+          title: 'title',
+          subtitle: 'podcastTitle',
         },
       });
       await Core.filters.add<FilterViewOptions>({
@@ -71,9 +69,8 @@
         query: { playbackStatuses: [PlaybackStatus.InProgress] },
         isFavorite: 0,
         viewOptions: {
-          primaryText: 'title',
-          secondaryText: 'podcastTitle',
-          accentText: null,
+          title: 'title',
+          subtitle: 'podcastTitle',
         },
       });
       filters = await Core.filters.queryAll<FilterViewOptions>();
