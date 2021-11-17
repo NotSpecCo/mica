@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { location, querystring, replace } from 'svelte-spa-router';
+  import { location, pop, querystring, replace } from 'svelte-spa-router';
   import { onKeyPress } from '../hooks/onKeyPress';
   import { onNavigate } from '../hooks/onNavigate';
   import type { MenuItem } from '../models';
@@ -25,7 +25,13 @@
         } else if (id?.startsWith('menu_')) {
           selectedMenuId = id;
         } else {
-          replace(id ? `${$location}?selected=${id}` : $location);
+          const params = new URLSearchParams($querystring);
+          if (id) {
+            params.set('selected', id);
+          } else {
+            params.delete('selected');
+          }
+          replace(`${$location}?${params.toString()}`);
           dispatch('itemchanged', { id });
         }
       },
@@ -47,7 +53,7 @@
         if (window.location.pathname.includes('/podcasts')) {
           return false;
         }
-        window.history.back();
+        pop();
       },
     },
     {}

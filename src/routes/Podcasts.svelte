@@ -18,6 +18,7 @@
   const queryUnsub = querystring.subscribe((val) => {
     selectedId = new URLSearchParams(val).get('selected');
   });
+  onDestroy(queryUnsub);
 
   async function seedData(): Promise<void> {
     try {
@@ -36,8 +37,6 @@
       console.error('Failed to seed data', err);
     }
   }
-
-  onDestroy(queryUnsub);
 </script>
 
 <View
@@ -52,7 +51,7 @@
     {
       id: 'menu_add',
       label: 'Add podcasts',
-      action: () => console.log('search'),
+      action: () => push('/search'),
     },
     {
       id: 'menu_import',

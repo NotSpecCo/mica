@@ -6,7 +6,9 @@
   import EpisodeDetail from './routes/EpisodeDetail.svelte';
   import Home from './routes/Home.svelte';
   import PodcastDetail from './routes/PodcastDetail.svelte';
+  import PodcastPreview from './routes/PodcastPreview.svelte';
   import Podcasts from './routes/Podcasts.svelte';
+  import Search from './routes/Search.svelte';
   import { settings } from './stores/settings';
   import { themes } from './themes';
 
@@ -37,8 +39,10 @@
   const routes = {
     '/': Home,
     '/podcasts': Podcasts,
+    '/podcasts/preview': PodcastPreview,
     '/podcasts/:podcastId': PodcastDetail,
     '/episodes/:episodeId': EpisodeDetail,
+    '/search': Search,
   };
 </script>
 
