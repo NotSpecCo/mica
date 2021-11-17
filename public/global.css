@@ -1,0 +1,115 @@
+@font-face {
+  font-family: 'GT Pressura';
+  font-style: normal;
+  font-weight: 400;
+  src: local('GT Pressura'),
+    url('https://fonts.cdnfonts.com/s/55472/GT Pressura Regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'GT Pressura';
+  font-style: italic;
+  font-weight: 400;
+  src: local('GT Pressura'),
+    url('https://fonts.cdnfonts.com/s/55472/GT Pressura Regular Italic.woff') format('woff');
+}
+@font-face {
+  font-family: 'GT Pressura';
+  font-style: normal;
+  font-weight: 300;
+  src: local('GT Pressura'),
+    url('https://fonts.cdnfonts.com/s/55472/GT Pressura Light.woff') format('woff');
+}
+@font-face {
+  font-family: 'GT Pressura';
+  font-style: italic;
+  font-weight: 300;
+  src: local('GT Pressura'),
+    url('https://fonts.cdnfonts.com/s/55472/GT Pressura Light Italic.woff') format('woff');
+}
+@font-face {
+  font-family: 'GT Pressura';
+  font-style: normal;
+  font-weight: 700;
+  src: local('GT Pressura'),
+    url('https://fonts.cdnfonts.com/s/55472/GT Pressura Bold.woff') format('woff');
+}
+@font-face {
+  font-family: 'GT Pressura';
+  font-style: italic;
+  font-weight: 700;
+  src: local('GT Pressura'),
+    url('https://fonts.cdnfonts.com/s/55472/GT Pressura Bold Italic.woff') format('woff');
+}
+
+:root {
+  --app-bg-color: #fff;
+  --app-accent-color: #fff;
+
+  --primary-text-color: rgba(0, 0, 0, 0.88);
+  --secondary-text-color: rgba(0, 0, 0, 0.5);
+  --accent-text-color: var(--app-accent-color);
+
+  --divider-color: rgba(0, 0, 0, 0.1);
+
+  --highlight-bg-color: var(--app-accent-color);
+  --highlight-text-color: rgba(255, 255, 255, 0.88);
+
+  --header-bg-color: var(--app-accent-color);
+  --header-text-color: rgba(255, 255, 255, 0.88);
+
+  --menu-bg-color: var(--app-bg-color);
+  --menu-text-color: var(--primary-text-color);
+
+  --menubar-bg-color: #000;
+  --menubar-bar-color: #000;
+  --menubar-text-color: rgba(255, 255, 255, 0.88);
+
+  --input-border-color: #aaa;
+
+  --scrim-color: rgba(0, 0, 0, 0.7);
+
+  --base-font-size: 10px;
+  font-size: var(--base-font-size);
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: var(--app-bg-color);
+  font-family: 'GT Pressura', sans-serif;
+  font-weight: 400;
+  /* font-size: 14px; */
+  color: var(--primary-text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-size: 1.4rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0.5rem 0;
+  padding: 0;
+}
+
+input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--accent-text-color);
+}
