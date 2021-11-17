@@ -70,7 +70,6 @@
 
 <script lang="ts">
   $: {
-    console.log('update episode', $player);
     if ($player.episode) {
       Core.episodes.update($player.episode.id, {
         duration: audio.duration,

@@ -7,6 +7,7 @@
   import EpisodeDetail from './routes/EpisodeDetail.svelte';
   import Filter from './routes/Filter.svelte';
   import Home from './routes/Home.svelte';
+  import Player from './routes/Player.svelte';
   import PodcastDetail from './routes/PodcastDetail.svelte';
   import PodcastPreview from './routes/PodcastPreview.svelte';
   import Podcasts from './routes/Podcasts.svelte';
@@ -46,6 +47,7 @@
     '/episodes/filter/:filterId': Filter,
     '/episodes/:episodeId': EpisodeDetail,
     '/search': Search,
+    '/player': Player,
   };
 </script>
 
