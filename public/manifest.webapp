@@ -1,0 +1,33 @@
+{
+  "id": "com.garredow.mica",
+  "name": "mica",
+  "description": "A minimalist podcast app",
+  "version": "0.1.0",
+  "launch_path": "/index.html",
+  "icons": {
+    "256": "/images/icon-256.png",
+    "128": "/images/icon-128.png",
+    "64": "/images/icon-64.png",
+    "48": "/images/icon-48.png"
+  },
+  "theme_color": "#000000",
+  "developer": {
+    "name": "Garrett Downs",
+    "url": "https://garrettdowns.com"
+  },
+  "type": "privileged",
+  "permissions": {
+    "audio-channel-content": {
+      "description": "Required to play audio in the background."
+    },
+    "systemXHR": {
+      "description": "Required to download podcasts and perform other vital functions."
+    },
+    "device-storage:sdcard": {
+      "access": "readwrite",
+      "description": "Required to read and write podcasts episodes to external storage."
+    }
+  },
+  "default_locale": "en",
+  "cursor": false
+}
