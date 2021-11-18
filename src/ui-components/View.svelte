@@ -50,13 +50,13 @@
       },
       Backspace: () => {
         // If on the main screen, let KaiOS minimize the app
-        if (window.location.pathname.includes('/podcasts')) {
+        if ($location === '/') {
           return false;
         }
         pop();
       },
     },
-    {}
+    { stopPropagation: true }
   );
 
   async function handleAction(menuItem: MenuItem) {
