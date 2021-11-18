@@ -7,6 +7,7 @@ import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import babel from 'rollup-plugin-babel';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -81,6 +82,11 @@ export default {
           },
         ],
       ],
+    }),
+
+    replace({
+      preventAssignment: true,
+      'process.env.NODE_ENV': !production ? "'development'" : "'production'",
     }),
 
     // If you have external dependencies installed from
