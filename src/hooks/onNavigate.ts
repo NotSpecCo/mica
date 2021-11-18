@@ -9,7 +9,6 @@ export function onNavigate(
   callbacks: { onChange?: (id: string) => void; onSelect?: (id: string) => void },
   options: Options
 ) {
-  let firstUpdate = !!options.initialSelectedId;
   let selectedId = options.initialSelectedId;
 
   if (selectedId) {
@@ -64,10 +63,7 @@ export function onNavigate(
   }
 
   afterUpdate(() => {
-    const success = scrollIntoView(selectedId, firstUpdate ? 'auto' : 'smooth');
-    if (success) {
-      firstUpdate = false;
-    }
+    scrollIntoView(selectedId);
   });
 
   document.addEventListener('keydown', handleKeyPress, options.capture);
@@ -92,7 +88,7 @@ function scrollContent(direction: 'up' | 'down'): boolean {
   );
 }
 
-function scrollIntoView(selectableId: string, behavior: 'smooth' | 'auto' = 'smooth'): boolean {
+function scrollIntoView(selectableId: string, behavior: 'smooth' | 'auto' = 'auto'): boolean {
   const scroller: HTMLElement = document.querySelector(`[data-selectable-scroller]`);
   const element: HTMLElement = document.querySelector(`[data-selectable-id="${selectableId}"]`);
 
