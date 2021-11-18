@@ -1,4 +1,4 @@
-# Mica
+# mica
 
 Minimalist podcast app for KaiOS. Design inspired by MuditaOS.
 
