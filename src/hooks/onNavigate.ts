@@ -9,9 +9,12 @@ export function onNavigate(
   callbacks: { onChange?: (id: string) => void; onSelect?: (id: string) => void },
   options: Options
 ) {
+  let firstUpdate = !!options.initialSelectedId;
   let selectedId = options.initialSelectedId;
 
-  if (selectedId) callbacks.onChange?.(selectedId);
+  if (selectedId) {
+    callbacks.onChange?.(selectedId);
+  }
 
   function handleKeyPress(ev: KeyboardEvent): void {
     // Check if valid key
@@ -27,47 +30,43 @@ export function onNavigate(
 
     ev.preventDefault();
 
-    if (ev.key === 'Enter') {
-      const element: HTMLElement = document.querySelector(`[data-selectable-id="${selectedId}"]`);
-      element?.dispatchEvent(new CustomEvent('itemselected'));
-    } else if (shortcutKeys.includes(ev.key)) {
-      const element: HTMLElement = document.querySelector(`[data-selectable-shortcut="${ev.key}"]`);
-      if (element) {
-        selectedId = element.dataset.selectableId;
-        callbacks.onChange?.(selectedId);
-        element.dispatchEvent(new CustomEvent('itemselected'));
-      }
-    } else {
-      const elements: HTMLElement[] = Array.from(document.querySelectorAll(`[data-selectable-id]`));
-      const index = elements.findIndex((a) => a.dataset.selectableId === selectedId);
-      let newIndex = ev.key === 'ArrowUp' ? index - 1 : index + 1;
+    const allItems = Array.from(document.querySelectorAll(`[data-selectable-id]`)).map(
+      (a: HTMLElement) => ({
+        id: a.dataset.selectableId,
+        shortcut: a.dataset.selectableShortcut,
+        element: a,
+      })
+    );
+    const currentIndex = allItems.findIndex((a) => a.id === selectedId);
+    const nextItem = shortcutKeys.includes(ev.key)
+      ? allItems.find((a) => a.shortcut === ev.key)
+      : ev.key === 'Enter'
+      ? allItems[currentIndex]
+      : ev.key === 'ArrowDown'
+      ? allItems[currentIndex + 1]
+      : allItems[currentIndex - 1];
 
-      if (newIndex <= -1 && ev.key === 'ArrowUp' && !scroll('up')) {
-        selectedId = undefined;
-        callbacks.onChange?.(selectedId);
-        return;
-      } else if (newIndex === elements.length && ev.key === 'ArrowDown' && !scroll('down')) {
-        return;
-      }
+    selectedId = nextItem?.id;
+    callbacks.onChange?.(nextItem?.id);
 
-      if (index === -1 && ev.key === 'ArrowUp') {
-        newIndex = elements.length - 1;
-      } else if (newIndex < -1) {
-        newIndex = -1;
-      } else if (newIndex > elements.length - 1) {
-        newIndex = 0;
-      }
-
-      selectedId = elements[newIndex]?.dataset.selectableId;
-      callbacks.onChange?.(selectedId);
+    if (ev.key === 'Enter' || shortcutKeys.includes(ev.key)) {
+      nextItem?.element.dispatchEvent(new CustomEvent('itemselected'));
+      return;
     }
+
+    if (nextItem || !scrollContent(ev.key === 'ArrowUp' ? 'up' : 'down')) {
+      return;
+    }
+
+    const nextItemWrapped = allItems[ev.key === 'ArrowUp' ? allItems.length - 1 : 0];
+    selectedId = nextItemWrapped?.id;
+    callbacks.onChange?.(nextItemWrapped?.id);
   }
 
   afterUpdate(() => {
-    const scroller: HTMLElement = document.querySelector(`[data-selectable-scroller]`);
-    const element: HTMLElement = document.querySelector(`[data-selectable-id="${selectedId}"]`);
-    if (scroller && element) {
-      scrollIntoView(scroller, element);
+    const success = scrollIntoView(selectedId, firstUpdate ? 'auto' : 'smooth');
+    if (success) {
+      firstUpdate = false;
     }
   });
 
@@ -78,7 +77,7 @@ export function onNavigate(
   });
 }
 
-function scroll(direction: 'up' | 'down'): boolean {
+function scrollContent(direction: 'up' | 'down'): boolean {
   const scroller: HTMLElement = document.querySelector(`[data-selectable-scroller]`);
   if (!scroller) return true;
 
@@ -87,36 +86,28 @@ function scroll(direction: 'up' | 'down'): boolean {
     behavior: 'smooth',
   });
 
-  if (direction === 'up' && scroller.scrollTop === 0) {
-    return true;
-  } else if (
-    direction === 'down' &&
-    scroller.scrollTop + scroller.clientHeight === scroller.scrollHeight
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  return (
+    (direction === 'up' && scroller.scrollTop === 0) ||
+    (direction === 'down' && scroller.scrollTop + scroller.clientHeight === scroller.scrollHeight)
+  );
 }
 
-function scrollIntoView(
-  scroller: HTMLElement,
-  element: HTMLElement,
-  behavior: 'smooth' | 'auto' = 'smooth'
-): void {
+function scrollIntoView(selectableId: string, behavior: 'smooth' | 'auto' = 'smooth'): boolean {
+  const scroller: HTMLElement = document.querySelector(`[data-selectable-scroller]`);
+  const element: HTMLElement = document.querySelector(`[data-selectable-id="${selectableId}"]`);
+
+  if (!scroller || !element) {
+    return false;
+  }
+
   const rect = element.getBoundingClientRect();
+  const topDiff = scroller.offsetTop - rect.top;
+  const bottomDiff = rect.bottom - (scroller.offsetHeight + scroller.offsetTop);
 
-  if (rect.top - scroller.offsetTop < 0) {
-    scroller.scroll({
-      top: scroller.scrollTop + rect.top - scroller.offsetTop,
-      behavior,
-    });
-    return;
-  }
+  scroller.scrollBy({
+    top: topDiff > 0 ? -topDiff : bottomDiff > 0 ? bottomDiff : 0,
+    behavior,
+  });
 
-  const diff = rect.bottom - (scroller.offsetHeight + scroller.offsetTop);
-
-  if (diff > 0) {
-    scroller.scroll({ top: scroller.scrollTop + diff, behavior });
-  }
+  return true;
 }
