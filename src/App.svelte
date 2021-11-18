@@ -1,5 +1,5 @@
 <script lang="ts">
-  import kebabcase from 'lodash.kebabcase';
+  import { kebabCase } from 'lodash';
   import { onMount } from 'svelte';
   import Router from 'svelte-spa-router';
   import AudioPlayer from './components/AudioPlayer.svelte';
@@ -20,7 +20,7 @@
 
     const theme = themes.find((a) => a.id === $settings.theme) || themes[0];
     for (const id in theme.values) {
-      document.documentElement.style.setProperty(`--${kebabcase(id)}`, theme.values[id]);
+      document.documentElement.style.setProperty(`--${kebabCase(id)}`, theme.values[id]);
     }
     document
       .querySelector('meta[name="theme-color"]')

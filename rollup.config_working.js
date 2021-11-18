@@ -7,6 +7,7 @@ import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import babel from 'rollup-plugin-babel';
+import replace from '@rollup/plugin-replace';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -34,7 +35,7 @@ function serve() {
 export default {
   input: 'src/main.ts',
   output: {
-    sourcemap: !production,
+    sourcemap: true,
     format: 'iife',
     name: 'app',
     file: 'public/build/bundle.js',
@@ -43,13 +44,44 @@ export default {
     svelte({
       preprocess: sveltePreprocess({
         sourceMap: !production,
+        // babel: {
+        //   extensions: ['.js', '.mjs', '.html', '.svelte'],
+        //   runtimeHelpers: true,
+        //   exclude: ['node_modules/@babel/**'],
+        //   plugins: [
+        //     '@babel/plugin-proposal-optional-chaining',
+        //     '@babel/plugin-syntax-dynamic-import',
+        //     [
+        //       '@babel/plugin-transform-runtime',
+        //       {
+        //         useESModules: true,
+        //       },
+        //     ],
+        //   ],
+        // },
+        // babel: {
+        //   presets: [
+        //     [
+        //       '@babel/preset-env',
+        //       {
+        //         // loose: true,
+        //         // // No need for babel to resolve modules
+        //         // modules: false,
+        //         // targets: {
+        //         //   // ! Very important. Target es6+
+        //         //   esmodules: true,
+        //         // },
+        //         targets: { chrome: '48', esmodules: true },
+        //       },
+        //     ],
+        //   ],
+        // },
         typescript: {
           compilerOptions: {
             target: 'ES2015',
             module: 'ES2015',
           },
         },
-        replace: [[/process\.env\.(\w+)/g, (_, prop) => JSON.stringify(process.env[prop])]],
       }),
       compilerOptions: {
         // enable run-time checks when not in production
@@ -68,7 +100,7 @@ export default {
         [
           '@babel/preset-env',
           {
-            targets: { firefox: '48' },
+            targets: { firefox: '40' },
           },
         ],
       ],
@@ -82,6 +114,11 @@ export default {
         ],
       ],
     }),
+
+    // replace({
+    //   preventAssignment: true,
+    //   'process.env.NODE_ENV': !production ? "'development'" : "'production'",
+    // }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
