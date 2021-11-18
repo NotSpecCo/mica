@@ -24,9 +24,6 @@
     for (const id in theme.values) {
       document.documentElement.style.setProperty(`--${kebabCase(id)}`, theme.values[id]);
     }
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme.values.headerBgColor);
 
     const fontSize = {
       [TextSize.Smallest]: 9,

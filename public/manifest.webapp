@@ -10,7 +10,7 @@
     "64": "/images/icon-64.png",
     "48": "/images/icon-48.png"
   },
-  "theme_color": "#000000",
+  "theme_color": "#FFFFFF",
   "developer": {
     "name": "Garrett Downs",
     "url": "https://garrettdowns.com"
@@ -29,5 +29,6 @@
     }
   },
   "default_locale": "en",
-  "cursor": false
+  "cursor": false,
+  "fullscreen": true
 }
