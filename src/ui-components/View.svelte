@@ -54,6 +54,11 @@
         menuOpen = !menuOpen;
       },
       Backspace: () => {
+        if (menuOpen) {
+          menuOpen = false;
+          return;
+        }
+
         // If on the main screen, let KaiOS minimize the app
         if ($location === '/') {
           return false;
