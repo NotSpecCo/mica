@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { location, pop, querystring, replace } from 'svelte-spa-router';
+  import { location, pop, push, querystring, replace } from 'svelte-spa-router';
   import { onKeyPress } from '../hooks/onKeyPress';
   import { onNavigate } from '../hooks/onNavigate';
   import type { MenuItem } from '../models';
@@ -9,7 +9,7 @@
   export let headerText: string;
   export let menuOpen: boolean = false;
   export let menuItems: MenuItem[] = [];
-  export let leftText: string = '';
+  export let leftText: string = 'Home';
   export let centerText: string = 'Select';
   export let rightText: string = menuItems.length > 0 ? 'Menu' : '';
 
@@ -44,6 +44,11 @@
 
   onKeyPress(
     {
+      SoftLeft: () => {
+        if ($location !== '/') {
+          push('/');
+        }
+      },
       SoftRight: () => {
         selectedMenuId = undefined;
         menuOpen = !menuOpen;

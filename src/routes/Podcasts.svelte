@@ -10,7 +10,6 @@
 
   onMount(async () => {
     podcasts = await Core.podcasts.queryAll({});
-    console.log('podcasts', podcasts);
   });
 
   let selectedId: string;

@@ -83,6 +83,7 @@
 
 <View
   headerText="Home"
+  leftText=""
   menuItems={[
     {
       id: 'menu_refresh',
