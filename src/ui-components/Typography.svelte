@@ -10,6 +10,7 @@
   export let align: 'left' | 'center' | 'right' = 'left';
   export let padding: 'vertical' | 'horizontal' | 'both' | 'none' = 'both';
   export let wrap: 'wrap' | 'nowrap' = 'wrap';
+  export let style: 'italic' | 'none' = 'none';
 </script>
 
 <div
@@ -20,6 +21,7 @@
     decoration,
     transform,
     align,
+    style,
     `padding-${padding}`,
     wrap
   )}
@@ -116,5 +118,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .italic {
+    font-style: italic;
   }
 </style>

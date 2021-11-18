@@ -153,7 +153,7 @@
         }}
       />
     {:else}
-      <Typography>Favorite podcasts will appear here.</Typography>
+      <Typography style="italic">Favorite podcasts will appear here.</Typography>
     {/each}
     <Link
       text="View all"
