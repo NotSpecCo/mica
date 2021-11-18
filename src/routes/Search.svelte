@@ -26,10 +26,10 @@
   onDestroy(queryUnsub);
 
   function handleSearchInput(ev: InputEvent) {
-    const q = new URLSearchParams({
-      query: (ev.target as HTMLInputElement).value,
-      selected: selectedId,
-    });
+    const q = new URLSearchParams();
+    q.append('query', (ev.target as HTMLInputElement).value);
+    q.append('selected', selectedId);
+
     replace(`/search?${q.toString()}`);
   }
 
