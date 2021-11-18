@@ -4,6 +4,7 @@
   import Router from 'svelte-spa-router';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import { TextSize } from './models';
+  import About from './routes/About.svelte';
   import EpisodeDetail from './routes/EpisodeDetail.svelte';
   import Filter from './routes/Filter.svelte';
   import Home from './routes/Home.svelte';
@@ -12,6 +13,7 @@
   import PodcastPreview from './routes/PodcastPreview.svelte';
   import Podcasts from './routes/Podcasts.svelte';
   import Search from './routes/Search.svelte';
+  import Settings from './routes/Settings.svelte';
   import { settings } from './stores/settings';
   import { themes } from './themes';
 
@@ -48,6 +50,8 @@
     '/episodes/:episodeId': EpisodeDetail,
     '/search': Search,
     '/player': Player,
+    '/settings': Settings,
+    '/about': About,
   };
 </script>
 
