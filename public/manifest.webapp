@@ -2,7 +2,7 @@
   "id": "com.garredow.mica",
   "name": "mica",
   "description": "A minimalist podcast app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "launch_path": "/index.html",
   "icons": {
     "256": "/images/icon-256.png",
