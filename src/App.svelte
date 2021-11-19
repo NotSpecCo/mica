@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { kebabCase } from 'lodash';
+  import kebabCase from 'lodash.kebabcase';
   import { onMount } from 'svelte';
   import Router from 'svelte-spa-router';
   import AudioPlayer from './components/AudioPlayer.svelte';

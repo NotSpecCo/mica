@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import { PlaybackStatus } from 'foxcasts-core/lib/enums';
-  import { throttle } from 'lodash';
+  import throttle from 'lodash.throttle';
   import type { PlaybackProgress } from '../models/PlaybackProgress';
   import { Core } from '../services/core';
   import { player } from '../stores/player';

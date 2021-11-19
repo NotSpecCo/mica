@@ -8,6 +8,7 @@ import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import babel from 'rollup-plugin-babel';
 import replace from '@rollup/plugin-replace';
+import json from '@rollup/plugin-json';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -40,6 +41,7 @@ export default {
     name: 'app',
     file: 'public/build/bundle.js',
   },
+  context: 'window',
   plugins: [
     svelte({
       preprocess: sveltePreprocess({
@@ -89,6 +91,8 @@ export default {
       'process.env.NODE_ENV': !production ? "'development'" : "'production'",
     }),
 
+    json(),
+
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
     // some cases you'll need additional configuration -
@@ -114,7 +118,7 @@ export default {
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    // production && terser(),
+    production && terser(),
   ],
   watch: {
     clearScreen: false,
