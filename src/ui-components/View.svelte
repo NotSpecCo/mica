@@ -137,10 +137,10 @@
   footer {
     display: flex;
     justify-content: space-between;
-    font-size: 1.3rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 600;
     text-transform: uppercase;
-    padding: 5px;
+    padding: 3px 7px 2px 7px;
   }
 
   footer > div {
