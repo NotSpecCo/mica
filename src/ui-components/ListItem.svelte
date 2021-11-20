@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Selectable } from '../models';
   import Icon, { IconName, IconSize } from './Icon.svelte';
+  import SelectableBase from './SelectableBase.svelte';
 
   export let icon: IconName = undefined;
   export let title: string;
@@ -8,41 +9,30 @@
   export let selectable: Selectable;
 </script>
 
-<div
-  class="root"
-  class:selected={selectable.selectedId === selectable.id}
-  data-selectable-id={selectable.id}
-  data-selectable-shortcut={selectable.shortcut}
-  on:itemselected={selectable.onSelect}
->
-  {#if icon}
-    <div class="icon">
-      <Icon {icon} size={IconSize.Small} />
-    </div>
-  {/if}
-  {#if selectable.shortcut}
-    <div class="shortcut">{selectable.shortcut}</div>
-  {/if}
-  <div class="container">
-    <div class="title">{title}</div>
-    {#if subtitle}
-      <div class="subtitle">{subtitle}</div>
+<SelectableBase {selectable}>
+  <div class="root">
+    {#if icon}
+      <div class="icon">
+        <Icon {icon} size={IconSize.Small} />
+      </div>
     {/if}
+    {#if selectable.shortcut}
+      <div class="shortcut">{selectable.shortcut}</div>
+    {/if}
+    <div class="container">
+      <div class="title">{title}</div>
+      {#if subtitle}
+        <div class="subtitle">{subtitle}</div>
+      {/if}
+    </div>
   </div>
-</div>
+</SelectableBase>
 
 <style>
   .root {
     padding: 4px 5px;
     display: flex;
-    /* align-items: center; */
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
     font-size: 1.5rem;
-  }
-
-  .selected {
-    border-color: var(--primary-text-color);
   }
 
   .shortcut {

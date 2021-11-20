@@ -15,7 +15,6 @@
 
   onMount(async () => {
     episode = await Core.episodes.query({ id: Number(params.episodeId) });
-    console.log('episode', episode);
   });
 
   let selectedId: string;

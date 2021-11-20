@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Selectable } from '../models';
+  import SelectableBase from '../ui-components/SelectableBase.svelte';
 
   export let selectable: Selectable;
 
@@ -11,16 +12,14 @@
     <slot />
   </div>
   {#if !expanded}
-    <div
-      class="show-more"
-      class:selected={selectable.selectedId === selectable.id}
-      class:expanded
-      data-selectable-id={selectable.id}
-      data-selectable-shortcut={selectable.shortcut}
-      on:itemselected={() => (expanded = true)}
+    <SelectableBase
+      selectable={{
+        ...selectable,
+        onSelect: () => (expanded = true),
+      }}
     >
-      Show more
-    </div>
+      <div class="show-more" class:expanded>Show more</div>
+    </SelectableBase>
   {/if}
 </div>
 
@@ -31,7 +30,7 @@
     align-items: center;
   }
   .content {
-    max-height: 60px;
+    max-height: 65px;
     overflow: hidden;
     position: relative;
   }
@@ -52,13 +51,7 @@
   }
   .show-more {
     text-align: center;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    width: 50%;
-  }
-  .show-more.selected {
-    /* font-weight: 700; */
-    border-color: var(--primary-text-color);
+    padding: 0 5px;
   }
   .show-more.expanded {
     display: none;

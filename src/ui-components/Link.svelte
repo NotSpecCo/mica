@@ -1,30 +1,19 @@
 <script lang="ts">
   import type { Selectable } from '../models';
+  import SelectableBase from './SelectableBase.svelte';
 
   export let text: string;
   export let disabled: boolean = false;
   export let selectable: Selectable;
 </script>
 
-<div
-  class="root"
-  class:selected={selectable.selectedId === selectable.id}
-  class:disabled
-  data-selectable-id={selectable.id}
-  data-selectable-shortcut={selectable.shortcut}
-  on:itemselected={selectable.onSelect}
->
-  {text}
-</div>
+<SelectableBase {selectable}>
+  <div class="root" class:disabled>{text}</div>
+</SelectableBase>
 
 <style>
   .root {
     padding: 2px 5px;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-  }
-  .root.selected {
-    border-color: var(--primary-text-color);
   }
   .root.disabled {
     opacity: 0.5;
