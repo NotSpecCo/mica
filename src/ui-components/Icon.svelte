@@ -35,7 +35,7 @@
 <script lang="ts">
   export let icon: IconName;
   export let size: IconSize | string = IconSize.Medium;
-  export let color: IconColor | string = 'inherit';
+  export let color: IconColor | string = 'var(--primary-text-color)';
 
   function getIcon() {
     switch (icon) {
