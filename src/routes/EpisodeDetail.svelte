@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { format, formatDuration } from 'date-fns';
   import { PlaybackStatus } from 'foxcasts-core/lib/enums';
   import type { EpisodeExtended } from 'foxcasts-core/lib/types';
   import { onDestroy, onMount } from 'svelte';
@@ -14,6 +15,7 @@
 
   onMount(async () => {
     episode = await Core.episodes.query({ id: Number(params.episodeId) });
+    console.log('episode', episode);
   });
 
   let selectedId: string;
@@ -24,7 +26,7 @@
 </script>
 
 <View
-  headerText="Episode"
+  headerText={episode?.podcastTitle}
   menuItems={[
     {
       id: 'menu_stream',
@@ -73,6 +75,17 @@
     },
   ]}
 >
-  <Typography type="titleSmall">{episode?.title}</Typography>
-  <Typography>{episode?.description}</Typography>
+  {#if episode}
+    <Typography type="titleSmall">{episode.title}</Typography>
+    <Typography
+      >This episode was released on {format(new Date(episode.date), 'cccc, MMMM do')} and is {formatDuration(
+        {
+          hours: Math.floor(episode.duration / 3600),
+          minutes: Math.floor((episode.duration % 3600) / 60),
+        },
+        { format: ['hours', 'minutes'] }
+      )} long.</Typography
+    >
+    <Typography>{episode.description}</Typography>
+  {/if}
 </View>
