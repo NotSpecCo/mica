@@ -21,9 +21,9 @@
     | 'filter';
 
   export enum IconSize {
-    Small = '1.8rem',
-    Medium = '2.4rem',
-    Large = '3.6rem',
+    Small = 18,
+    Medium = 24,
+    Large = 36,
   }
 
   export enum IconColor {
@@ -83,8 +83,8 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox={`0 0 24 24`}
-  height={size}
-  width={size}
+  height={`${size}px`}
+  width={`${size}px`}
   fill={color}
 >
   {@html getIcon()}
