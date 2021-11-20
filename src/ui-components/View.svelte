@@ -50,6 +50,7 @@
         }
       },
       SoftRight: () => {
+        if (menuItems.length === 0) return;
         selectedMenuId = undefined;
         menuOpen = !menuOpen;
       },
