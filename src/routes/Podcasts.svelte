@@ -55,7 +55,7 @@
     {
       id: 'menu_import',
       label: 'Import OPML file',
-      action: () => console.log('import opml'),
+      action: () => push('/podcasts/import'),
     },
   ]}
 >

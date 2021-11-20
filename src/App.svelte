@@ -6,6 +6,7 @@
   import EpisodeDetail from './routes/EpisodeDetail.svelte';
   import Filter from './routes/Filter.svelte';
   import Home from './routes/Home.svelte';
+  import Import from './routes/Import.svelte';
   import Player from './routes/Player.svelte';
   import PodcastDetail from './routes/PodcastDetail.svelte';
   import PodcastPreview from './routes/PodcastPreview.svelte';
@@ -45,6 +46,7 @@
   const routes = {
     '/': Home,
     '/podcasts': Podcasts,
+    '/podcasts/import': Import,
     '/podcasts/preview': PodcastPreview,
     '/podcasts/:podcastId': PodcastDetail,
     '/episodes/filter/:filterId': Filter,
