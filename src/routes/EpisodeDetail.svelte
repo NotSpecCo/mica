@@ -2,6 +2,7 @@
   import { format, formatDuration } from 'date-fns';
   import { PlaybackStatus } from 'foxcasts-core/lib/enums';
   import type { EpisodeExtended } from 'foxcasts-core/lib/types';
+  import { formatTime } from 'foxcasts-core/lib/utils';
   import { onDestroy, onMount } from 'svelte';
   import { querystring } from 'svelte-spa-router';
   import { load } from '../components/AudioPlayer.svelte';
@@ -31,6 +32,12 @@
       id: 'menu_stream',
       label: episode?.isDownloaded ? 'Play' : 'Stream',
       action: () => load(episode.id),
+    },
+    {
+      id: 'menu_resume',
+      label: `Resume at ${formatTime(episode?.progress)}`,
+      hidden: episode?.progress === 0,
+      action: () => load(episode.id, true),
     },
     {
       id: 'menu_favorite',
@@ -72,7 +79,7 @@
             episode.progress = 0;
           }),
     },
-  ]}
+  ].filter((a) => !a.hidden)}
 >
   {#if episode}
     <Typography type="titleSmall">{episode.title}</Typography>

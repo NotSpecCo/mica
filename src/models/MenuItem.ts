@@ -3,6 +3,7 @@ export type MenuItem = {
   label: string;
   inProgress?: boolean;
   disabled?: boolean;
+  hidden?: boolean;
   closeAfterAction?: boolean;
   action: () => Promise<void> | void;
 };
