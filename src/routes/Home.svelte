@@ -52,6 +52,7 @@
         query: { withinDays: 30, limit: 25 },
         isFavorite: 0,
         viewOptions: {
+          icon: 'time',
           title: 'title',
           subtitle: 'podcastTitle',
         },
@@ -61,6 +62,7 @@
         query: { isFavorite: 1 },
         isFavorite: 0,
         viewOptions: {
+          icon: 'favorite',
           title: 'title',
           subtitle: 'podcastTitle',
         },
@@ -70,6 +72,7 @@
         query: { playbackStatuses: [PlaybackStatus.InProgress] },
         isFavorite: 0,
         viewOptions: {
+          icon: 'play',
           title: 'title',
           subtitle: 'podcastTitle',
         },
@@ -119,6 +122,8 @@
           onSelect: () => push(`/episodes/${episode.id}`),
         }}
       />
+    {:else}
+      <Typography>Nothing new today</Typography>
     {/each}
   {/if}
   <Typography type="titleSmall">Episodes</Typography>
@@ -127,6 +132,7 @@
   {:else}
     {#each filters as filter (filter.id)}
       <ListItem
+        icon={filter.viewOptions.icon}
         title={filter.title}
         selectable={{
           id: `filter_${filter.id}`,
@@ -166,6 +172,7 @@
   {/if}
   <Typography type="titleSmall">Other</Typography>
   <ListItem
+    icon="settings"
     title="Settings"
     selectable={{
       id: 'settings',
@@ -174,6 +181,7 @@
     }}
   />
   <ListItem
+    icon="info"
     title="About"
     selectable={{
       id: 'about',

@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { Selectable } from '../models';
+  import Icon, { IconName, IconSize } from './Icon.svelte';
 
+  export let icon: IconName = undefined;
   export let title: string;
   export let subtitle: string = undefined;
   export let selectable: Selectable;
@@ -13,6 +15,11 @@
   data-selectable-shortcut={selectable.shortcut}
   on:itemselected={selectable.onSelect}
 >
+  {#if icon}
+    <div class="icon">
+      <Icon {icon} size={IconSize.Small} />
+    </div>
+  {/if}
   {#if selectable.shortcut}
     <div class="shortcut">{selectable.shortcut}</div>
   {/if}
@@ -41,6 +48,13 @@
   .shortcut {
     margin: 0 5px 0 -5px;
     font-weight: 600;
+  }
+
+  .icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 5px;
   }
 
   .title,
