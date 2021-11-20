@@ -1,6 +1,5 @@
 <script lang="ts">
   import kebabCase from 'lodash.kebabcase';
-  import { onMount } from 'svelte';
   import Router from 'svelte-spa-router';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import { TextSize } from './models';
@@ -17,9 +16,7 @@
   import { settings } from './stores/settings';
   import { themes } from './themes';
 
-  onMount(() => {
-    console.log('app mounted', $settings);
-
+  $: {
     const theme = themes.find((a) => a.id === $settings.theme) || themes[0];
     for (const id in theme.values) {
       document.documentElement.style.setProperty(`--${kebabCase(id)}`, theme.values[id]);
@@ -36,7 +33,7 @@
       '--base-font-size',
       `${fontSize[$settings.textSize]}px`
     );
-  });
+  }
 
   const routes = {
     '/': Home,
