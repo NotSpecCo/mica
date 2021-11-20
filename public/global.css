@@ -1,31 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --app-bg-color: #fff;
-  --app-accent-color: #fff;
-
-  --primary-text-color: rgba(0, 0, 0, 0.88);
-  --secondary-text-color: rgba(0, 0, 0, 0.5);
-  --accent-text-color: var(--app-accent-color);
-
-  --divider-color: rgba(0, 0, 0, 0.1);
-
-  --highlight-bg-color: var(--app-accent-color);
-  --highlight-text-color: rgba(255, 255, 255, 0.88);
-
-  --header-bg-color: var(--app-accent-color);
-  --header-text-color: rgba(255, 255, 255, 0.88);
-
-  --menu-bg-color: var(--app-bg-color);
-  --menu-text-color: var(--primary-text-color);
-
-  --menubar-bg-color: #000;
-  --menubar-bar-color: #000;
-  --menubar-text-color: rgba(255, 255, 255, 0.88);
-
-  --input-border-color: #aaa;
-
-  --scrim-color: rgba(0, 0, 0, 0.7);
+  --theme-hue: 41;
+  --theme-saturation: 100%;
+  --theme-bg-luminance: 100%;
+  --theme-text-luminance: 0%;
+  --app-bg-color: hsl(var(--theme-hue), var(--theme-saturation), var(--theme-bg-luminance));
+  --primary-text-color: hsl(var(--theme-hue), var(--theme-saturation), var(--theme-text-luminance));
+  --secondary-text-color: hsla(
+    var(--theme-hue),
+    var(--theme-saturation),
+    var(--theme-text-luminance),
+    0.6
+  );
 
   --base-font-size: 10px;
   font-size: var(--base-font-size);
@@ -71,4 +58,5 @@ input {
   outline: none;
   border-bottom: 1px solid var(--primary-text-color);
   font-size: 1.4rem;
+  background: none !important;
 }

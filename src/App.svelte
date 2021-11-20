@@ -1,5 +1,4 @@
 <script lang="ts">
-  import kebabCase from 'lodash.kebabcase';
   import Router from 'svelte-spa-router';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import { TextSize } from './models';
@@ -14,12 +13,20 @@
   import Search from './routes/Search.svelte';
   import Settings from './routes/Settings.svelte';
   import { settings } from './stores/settings';
-  import { themes } from './themes';
 
   $: {
-    const theme = themes.find((a) => a.id === $settings.theme) || themes[0];
-    for (const id in theme.values) {
-      document.documentElement.style.setProperty(`--${kebabCase(id)}`, theme.values[id]);
+    const warmth = $settings.warmth * 5;
+    document.documentElement.style.setProperty(`--theme-bg-luminance`, `${100 - warmth}%`);
+    if (warmth < 20) {
+      document.documentElement.style.setProperty(`--theme-text-luminance`, `${0}%`);
+    } else if (warmth < 50) {
+      document.documentElement.style.setProperty(`--theme-text-luminance`, `${20}%`);
+    } else if (warmth < 70) {
+      document.documentElement.style.setProperty(`--theme-text-luminance`, `${10}%`);
+    } else if (warmth < 99) {
+      document.documentElement.style.setProperty(`--theme-text-luminance`, `${80}%`);
+    } else {
+      document.documentElement.style.setProperty(`--theme-text-luminance`, `${100}%`);
     }
 
     const fontSize = {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
   import { querystring } from 'svelte-spa-router';
-  import { TextSize, Theme } from '../models';
+  import { TextSize } from '../models';
   import { settings, updateSetting } from '../stores/settings';
   import InlineRange from '../ui-components/InlineRange.svelte';
   import InlineSelect from '../ui-components/InlineSelect.svelte';
@@ -18,18 +18,17 @@
 
 <View headerText="Settings">
   <Typography type="titleSmall">Appearance</Typography>
-  <InlineSelect
-    label="Theme"
-    value={$settings.theme}
-    options={[
-      { id: Theme.Light, label: 'Light' },
-      { id: Theme.Dark, label: 'Dark' },
-    ]}
+  <InlineRange
+    label="Warmth"
+    value={$settings.warmth}
+    min={0}
+    max={20}
+    increment={1}
     selectable={{
-      id: 'theme',
+      id: 'warmth',
       selectedId,
     }}
-    onChange={(id) => updateSetting('theme', id)}
+    onChange={(val) => updateSetting('warmth', val)}
   />
   <InlineSelect
     label="Text size"

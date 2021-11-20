@@ -1,8 +1,3 @@
-export enum Theme {
-  Light = 'light',
-  Dark = 'dark',
-}
-
 export enum TextSize {
   Smallest = 'smallest',
   Small = 'small',
@@ -12,7 +7,7 @@ export enum TextSize {
 }
 
 export type Settings = {
-  theme: Theme;
+  warmth: number;
   textSize: TextSize;
   playbackSpeed: number;
   playbackSkipBack: number;

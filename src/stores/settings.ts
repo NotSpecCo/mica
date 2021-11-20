@@ -1,9 +1,9 @@
 import { writable } from 'svelte/store';
-import { Settings, TextSize, Theme } from '../models';
+import { Settings, TextSize } from '../models';
 import { getStorageItem, setStorageItem, StorageKey } from '../services/storage';
 
 const defaultSettings: Settings = {
-  theme: Theme.Light,
+  warmth: 0,
   textSize: TextSize.Medium,
   playbackSpeed: 1,
   playbackSkipBack: 10,
