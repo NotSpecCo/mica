@@ -26,10 +26,8 @@
   onDestroy(queryUnsub);
 
   function handleSearchInput(ev: InputEvent) {
-    const q = new URLSearchParams();
-    q.append('query', (ev.target as HTMLInputElement).value);
-    q.append('selected', selectedId);
-
+    const q = new URLSearchParams($querystring);
+    q.set('query', (ev.target as HTMLInputElement).value);
     replace(`/search?${q.toString()}`);
   }
 
@@ -56,7 +54,6 @@
       placeholder="Search..."
       selectable={{
         id: 'search',
-        selectedId,
         onSelect: search,
       }}
       on:input={handleSearchInput}
@@ -67,7 +64,6 @@
       title={result.title}
       selectable={{
         id: result.podexId.toString(),
-        selectedId,
         onSelect: () => push(`/podcasts/preview?podexId=${result.podexId}`),
       }}
     />

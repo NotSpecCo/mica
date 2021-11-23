@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onKeyPress } from '../hooks/onKeyPress';
   import type { Selectable } from '../models';
+  import { selectedId } from '../stores/selectedId';
   import Icon, { IconSize } from './Icon.svelte';
   import SelectableBase from './SelectableBase.svelte';
 
@@ -27,14 +28,14 @@
   onKeyPress(
     {
       ArrowLeft: () => {
-        if (selectable.id === selectable.selectedId) {
+        if (selectable.id === $selectedId) {
           change(increment * -1);
           return true;
         }
         return false;
       },
       ArrowRight: () => {
-        if (selectable.id === selectable.selectedId) {
+        if (selectable.id === $selectedId) {
           change(increment);
           return true;
         }

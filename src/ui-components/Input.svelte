@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Selectable } from '../models';
+  import { selectedId } from '../stores/selectedId';
 
   export let value: string;
   export let disabled: boolean = false;
@@ -8,7 +9,7 @@
   export let selectable: Selectable;
 
   let input: HTMLInputElement;
-  $: if (selectable.selectedId === selectable.id) {
+  $: if ($selectedId === selectable.id) {
     input?.focus({ preventScroll: true });
   } else {
     input?.blur();
@@ -17,13 +18,13 @@
 
 <div
   class="root"
-  class:selected={selectable.selectedId === selectable.id}
+  class:selected={$selectedId === selectable.id}
   data-selectable-id={selectable.id}
   data-selectable-shortcut={selectable.shortcut}
   on:itemselected={selectable.onSelect}
 >
   <input
-    class:selected={selectable.selectedId === selectable.id}
+    class:selected={$selectedId === selectable.id}
     {type}
     {value}
     {placeholder}

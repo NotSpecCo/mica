@@ -1,6 +1,6 @@
 export type Selectable = {
   id: string;
   shortcut?: string | number;
-  selectedId: string;
+  selected?: boolean;
   onSelect?: () => void;
 };

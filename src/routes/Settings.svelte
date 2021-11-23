@@ -1,19 +1,10 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
-  import { querystring } from 'svelte-spa-router';
   import { TextSize } from '../models';
   import { settings, updateSetting } from '../stores/settings';
   import InlineRange from '../ui-components/InlineRange.svelte';
   import InlineSelect from '../ui-components/InlineSelect.svelte';
   import Typography from '../ui-components/Typography.svelte';
   import View from '../ui-components/View.svelte';
-
-  let selectedId: string;
-  const queryUnsub = querystring.subscribe((val) => {
-    const params = new URLSearchParams(val);
-    selectedId = params.get('selected');
-  });
-  onDestroy(queryUnsub);
 </script>
 
 <View headerText="Settings">
@@ -26,7 +17,6 @@
     increment={1}
     selectable={{
       id: 'warmth',
-      selectedId,
     }}
     onChange={(val) => updateSetting('warmth', val)}
   />
@@ -42,7 +32,6 @@
     ]}
     selectable={{
       id: 'textSize',
-      selectedId,
     }}
     onChange={(id) => updateSetting('textSize', id)}
   />
@@ -56,7 +45,6 @@
     increment={0.1}
     selectable={{
       id: 'playbackSpeed',
-      selectedId,
     }}
     onChange={(val) => updateSetting('playbackSpeed', val)}
   />
@@ -69,7 +57,6 @@
     increment={1}
     selectable={{
       id: 'playbackSkipBack',
-      selectedId,
     }}
     onChange={(val) => updateSetting('playbackSkipBack', val)}
   />
@@ -82,7 +69,6 @@
     increment={1}
     selectable={{
       id: 'playbackSkipForward',
-      selectedId,
     }}
     onChange={(val) => updateSetting('playbackSkipForward', val)}
   />

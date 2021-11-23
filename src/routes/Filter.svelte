@@ -2,8 +2,8 @@
   import { format } from 'date-fns';
   import type { EpisodeExtended, FilterList } from 'foxcasts-core/lib/types';
   import { formatFileSize, formatTime } from 'foxcasts-core/lib/utils';
-  import { onDestroy, onMount } from 'svelte';
-  import { push, querystring } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
+  import { push } from 'svelte-spa-router';
   import type { FilterViewOptions, LineOptions } from '../models';
   import { Core } from '../services/core';
   import ListItem from '../ui-components/ListItem.svelte';
@@ -19,12 +19,6 @@
     filter = await Core.filters.get<FilterViewOptions>({ id: Number(params.filterId) });
     episodes = await Core.episodes.queryAll(filter.query);
   });
-
-  let selectedId: string;
-  const queryUnsub = querystring.subscribe((val) => {
-    selectedId = new URLSearchParams(val).get('selected');
-  });
-  onDestroy(queryUnsub);
 
   function getText(episode: EpisodeExtended, field: LineOptions | null): string | undefined {
     if (field === 'date') {
@@ -55,7 +49,6 @@
         subtitle={getText(episode, filter.viewOptions.subtitle)}
         selectable={{
           id: episode.id.toString(),
-          selectedId,
           onSelect: () => push(`/episodes/${episode.id}`),
         }}
       />{:else}

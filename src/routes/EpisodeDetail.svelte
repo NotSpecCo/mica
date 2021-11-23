@@ -3,8 +3,7 @@
   import { PlaybackStatus } from 'foxcasts-core/lib/enums';
   import type { EpisodeExtended } from 'foxcasts-core/lib/types';
   import { formatTime } from 'foxcasts-core/lib/utils';
-  import { onDestroy, onMount } from 'svelte';
-  import { querystring } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
   import { load } from '../components/AudioPlayer.svelte';
   import { Core } from '../services/core';
   import Typography from '../ui-components/Typography.svelte';
@@ -17,12 +16,6 @@
   onMount(async () => {
     episode = await Core.episodes.query({ id: Number(params.episodeId) });
   });
-
-  let selectedId: string;
-  const queryUnsub = querystring.subscribe((val) => {
-    selectedId = new URLSearchParams(val).get('selected');
-  });
-  onDestroy(queryUnsub);
 </script>
 
 <View

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { EpisodeExtended, Podcast } from 'foxcasts-core/lib/types';
-  import { onDestroy, onMount } from 'svelte';
-  import { pop, push, querystring } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
+  import { pop, push } from 'svelte-spa-router';
   import { Core } from '../services/core';
   import Expandable from '../ui-components/Expandable.svelte';
   import ListItem from '../ui-components/ListItem.svelte';
@@ -18,12 +18,6 @@
     episodes = await Core.episodes.queryAll({ podcastIds: [Number(params.podcastId)], limit: 20 });
     console.log('podcast', podcast, episodes);
   });
-
-  let selectedId: string;
-  const queryUnsub = querystring.subscribe((val) => {
-    selectedId = new URLSearchParams(val).get('selected');
-  });
-  onDestroy(queryUnsub);
 </script>
 
 <View
@@ -47,7 +41,6 @@
   <Expandable
     selectable={{
       id: 'showMoreDesc',
-      selectedId,
     }}
   >
     <Typography>{podcast?.description}</Typography>
@@ -58,13 +51,8 @@
       title={episode.title}
       selectable={{
         id: episode.id.toString(),
-        selectedId,
         onSelect: () => push(`/episodes/${episode.id}`),
       }}
     />
   {/each}
 </View>
-
-<style>
-  /* your styles go here */
-</style>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onKeyPress } from '../hooks/onKeyPress';
   import type { Option, Selectable } from '../models';
+  import { selectedId } from '../stores/selectedId';
   import { getIndexWrap } from '../utils';
   import Icon, { IconSize } from './Icon.svelte';
   import SelectableBase from './SelectableBase.svelte';
@@ -23,14 +24,14 @@
   onKeyPress(
     {
       ArrowLeft: () => {
-        if (selectable.id === selectable.selectedId) {
+        if (selectable.id === $selectedId) {
           change(-1);
           return true;
         }
         return false;
       },
       ArrowRight: () => {
-        if (selectable.id === selectable.selectedId) {
+        if (selectable.id === $selectedId) {
           change(1);
           return true;
         }

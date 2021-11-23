@@ -3,8 +3,8 @@
   import { PlaybackStatus } from 'foxcasts-core/lib/enums';
   import type { EpisodeExtended, FilterList, Podcast } from 'foxcasts-core/lib/types';
   import { formatTime } from 'foxcasts-core/lib/utils';
-  import { onDestroy, onMount } from 'svelte';
-  import { push, querystring } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
+  import { push } from 'svelte-spa-router';
   import type { FilterViewOptions } from '../models';
   import { Core } from '../services/core';
   import { player } from '../stores/player';
@@ -23,12 +23,6 @@
     Core.podcasts.queryAll({ isFavorite: 1 }).then((res) => (podcasts = res));
     getFilters();
   });
-
-  let selectedId: string;
-  const queryUnsub = querystring.subscribe((val) => {
-    selectedId = new URLSearchParams(val).get('selected');
-  });
-  onDestroy(queryUnsub);
 
   async function checkForNewEpisodes(force = false) {
     const lastUpdate = localStorage.getItem('lastUpdate');
@@ -103,7 +97,6 @@
       subtitle={`${formatTime($player.currentTime)} / ${formatTime($player.duration || 0)}`}
       selectable={{
         id: `player`,
-        selectedId,
         onSelect: () => push(`/player`),
       }}
     />
@@ -118,7 +111,6 @@
         subtitle={episode.podcastTitle}
         selectable={{
           id: `episode_${episode.id}`,
-          selectedId,
           onSelect: () => push(`/episodes/${episode.id}`),
         }}
       />
@@ -136,7 +128,6 @@
         title={filter.title}
         selectable={{
           id: `filter_${filter.id}`,
-          selectedId,
           onSelect: () => push(`/episodes/filter/${filter.id}`),
         }}
       />
@@ -154,7 +145,6 @@
         title={podcast.title}
         selectable={{
           id: `podcast_${podcast.id}`,
-          selectedId,
           onSelect: () => push(`/podcasts/${podcast.id}`),
         }}
       />
@@ -165,7 +155,6 @@
       text="View all"
       selectable={{
         id: 'viewAllPodcasts',
-        selectedId,
         onSelect: () => push(`/podcasts`),
       }}
     />
@@ -176,7 +165,6 @@
     title="Settings"
     selectable={{
       id: 'settings',
-      selectedId,
       onSelect: () => push(`/settings`),
     }}
   />
@@ -185,7 +173,6 @@
     title="About"
     selectable={{
       id: 'about',
-      selectedId,
       onSelect: () => push(`/about`),
     }}
   />

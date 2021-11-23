@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte';
   import { location, pop, push, querystring, replace } from 'svelte-spa-router';
   import { onKeyPress } from '../hooks/onKeyPress';
   import { onNavigate } from '../hooks/onNavigate';
   import type { MenuItem } from '../models';
+  import { selectedId } from '../stores/selectedId';
   import ListItem from './ListItem.svelte';
 
   export let headerText: string;
@@ -16,6 +17,18 @@
   const dispatch = createEventDispatcher();
 
   let selectedMenuId: string;
+
+  let queryStringUnsub;
+  onMount(() => {
+    queryStringUnsub = querystring.subscribe((val) => {
+      selectedId.set(new URLSearchParams(val).get('selected') || undefined);
+    });
+  });
+
+  onDestroy(() => {
+    queryStringUnsub();
+    selectedId.set(undefined);
+  });
 
   onNavigate(
     {
@@ -92,7 +105,7 @@
           title={`${menuItem.label}${menuItem.inProgress ? '...' : ''}`}
           selectable={{
             id: `menu_${menuItem.id}`,
-            selectedId: selectedMenuId,
+            selected: `menu_${menuItem.id}` === selectedMenuId,
             shortcut: i + 1 <= 9 ? i + 1 : undefined,
             onSelect: () => handleAction(menuItem),
           }}

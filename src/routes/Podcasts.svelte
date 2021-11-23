@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Podcast } from 'foxcasts-core/lib/types';
-  import { onDestroy, onMount } from 'svelte';
-  import { push, querystring } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
+  import { push } from 'svelte-spa-router';
   import { Core } from '../services/core';
   import ListItem from '../ui-components/ListItem.svelte';
   import View from '../ui-components/View.svelte';
@@ -11,13 +11,6 @@
   onMount(async () => {
     podcasts = await Core.podcasts.queryAll({});
   });
-
-  let selectedId: string;
-
-  const queryUnsub = querystring.subscribe((val) => {
-    selectedId = new URLSearchParams(val).get('selected');
-  });
-  onDestroy(queryUnsub);
 
   async function seedData(): Promise<void> {
     try {
@@ -69,14 +62,9 @@
         title={podcast.title}
         selectable={{
           id: podcast.id.toString(),
-          selectedId,
           onSelect: () => push(`/podcasts/${podcast.id}`),
         }}
       />
     {/each}
   {/if}
 </View>
-
-<style>
-  /* your styles go here */
-</style>

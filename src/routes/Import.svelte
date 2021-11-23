@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { pop, querystring } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
+  import { pop } from 'svelte-spa-router';
   import type { OpmlFile, StorageFile } from '../models';
   import { Core } from '../services/core';
   import { OPML } from '../services/opml';
@@ -14,12 +14,6 @@
   onMount(async () => {
     files = await OPML.listFiles();
   });
-
-  let selectedId: string;
-  const queryUnsub = querystring.subscribe((val) => {
-    selectedId = new URLSearchParams(val).get('selected');
-  });
-  onDestroy(queryUnsub);
 </script>
 
 <View
@@ -51,7 +45,6 @@
         subtitle={file.path}
         selectable={{
           id: file.id.toString(),
-          selectedId,
           onSelect: () =>
             OPML.openFile(file.path).then(({ data }) => {
               workingFile = data;
@@ -65,7 +58,6 @@
         title={feed.text}
         selectable={{
           id: feed.id.toString(),
-          selectedId,
         }}
       />
     {/each}

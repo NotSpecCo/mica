@@ -21,10 +21,8 @@
     Core.podcasts.query({ podexId: Number(podexId), feedUrl }).then((res) => (subscribed = !!res));
   });
 
-  let selectedId: string;
   const queryUnsub = querystring.subscribe((val) => {
     const params = new URLSearchParams(val);
-    selectedId = params.get('selected');
     podexId = Number(params.get('podexId')) || undefined;
     feedUrl = params.get('feedUrl');
   });
@@ -54,7 +52,6 @@
     <Expandable
       selectable={{
         id: 'showMoreDesc',
-        selectedId,
       }}
     >
       <Typography>{podcast?.description}</Typography>
@@ -66,12 +63,7 @@
       title={episode.title}
       selectable={{
         id: episode.podexId.toString(),
-        selectedId,
       }}
     />
   {/each}
 </View>
-
-<style>
-  /* your styles go here */
-</style>
