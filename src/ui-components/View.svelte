@@ -5,6 +5,7 @@
   import { onNavigate } from '../hooks/onNavigate';
   import type { MenuItem } from '../models';
   import { selectedId } from '../stores/selectedId';
+  import { settings } from '../stores/settings';
   import ListItem from './ListItem.svelte';
 
   export let headerText: string;
@@ -97,7 +98,9 @@
 </script>
 
 <div class="root">
-  <header>{`${headerText || '\u00A0'}${menuOpen ? ' Menu' : ''}`}</header>
+  <header class={$settings.headerDisplay}>
+    {`${headerText || '\u00A0'}${menuOpen ? ' Menu' : ''}`}
+  </header>
   <main class="content" data-selectable-scroller>
     {#if menuOpen}
       {#each menuItems as menuItem, i}
@@ -115,7 +118,7 @@
       <slot />
     {/if}
   </main>
-  <footer>
+  <footer class={$settings.footerDisplay}>
     <div class="left">{leftText}</div>
     <div class="center">{centerText}</div>
     <div class="right">{rightText}</div>
@@ -135,10 +138,16 @@
     text-align: center;
     font-size: 1.5rem;
     font-weight: 700;
-    padding: 2px 5px;
+    padding: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  header.compact {
+    padding: 0 5px;
+  }
+  header.hidden {
+    display: none;
   }
 
   main {
@@ -154,7 +163,14 @@
     font-size: 1.2rem;
     font-weight: 600;
     text-transform: uppercase;
+    padding: 5px 7px 5px 7px;
+  }
+  footer.compact {
     padding: 3px 7px 2px 7px;
+    padding: 0 5px;
+  }
+  footer.hidden {
+    display: none;
   }
 
   footer > div {

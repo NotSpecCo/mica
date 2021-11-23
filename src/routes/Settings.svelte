@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TextSize } from '../models';
+  import { DisplayType, TextSize } from '../models';
   import { settings, updateSetting } from '../stores/settings';
   import InlineRange from '../ui-components/InlineRange.svelte';
   import InlineSelect from '../ui-components/InlineSelect.svelte';
@@ -34,6 +34,32 @@
       id: 'textSize',
     }}
     onChange={(id) => updateSetting('textSize', id)}
+  />
+  <InlineSelect
+    label="Header"
+    value={$settings.headerDisplay}
+    options={[
+      { id: DisplayType.Normal, label: 'Normal' },
+      { id: DisplayType.Compact, label: 'Compact' },
+      { id: DisplayType.Hidden, label: 'Hidden' },
+    ]}
+    selectable={{
+      id: 'headerDisplay',
+    }}
+    onChange={(id) => updateSetting('headerDisplay', id)}
+  />
+  <InlineSelect
+    label="Footer"
+    value={$settings.footerDisplay}
+    options={[
+      { id: DisplayType.Normal, label: 'Normal' },
+      { id: DisplayType.Compact, label: 'Compact' },
+      { id: DisplayType.Hidden, label: 'Hidden' },
+    ]}
+    selectable={{
+      id: 'footerDisplay',
+    }}
+    onChange={(id) => updateSetting('footerDisplay', id)}
   />
   <Typography type="titleSmall">Player</Typography>
   <InlineRange

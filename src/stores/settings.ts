@@ -1,10 +1,12 @@
 import { writable } from 'svelte/store';
-import { Settings, TextSize } from '../models';
+import { DisplayType, Settings, TextSize } from '../models';
 import { getStorageItem, setStorageItem, StorageKey } from '../services/storage';
 
 const defaultSettings: Settings = {
   warmth: 0,
   textSize: TextSize.Medium,
+  headerDisplay: DisplayType.Compact,
+  footerDisplay: DisplayType.Compact,
   playbackSpeed: 1,
   playbackSkipBack: 10,
   playbackSkipForward: 30,
