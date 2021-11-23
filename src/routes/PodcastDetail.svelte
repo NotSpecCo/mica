@@ -16,7 +16,6 @@
   onMount(async () => {
     podcast = await Core.podcasts.query({ id: Number(params.podcastId) });
     episodes = await Core.episodes.queryAll({ podcastIds: [Number(params.podcastId)], limit: 20 });
-    console.log('podcast', podcast, episodes);
   });
 </script>
 

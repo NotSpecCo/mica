@@ -30,10 +30,7 @@ export class KaiOS {
         request.onerror = () => reject(request.error);
       });
     },
-    getAsFileUrl: (
-      storageName: StorageName,
-      filePathAndName: string
-    ): Promise<string> => {
+    getAsFileUrl: (storageName: StorageName, filePathAndName: string): Promise<string> => {
       return new Promise((resolve, reject) => {
         const storage = this.navigator.getDeviceStorage(storageName);
         const request = storage.get(filePathAndName);
@@ -65,10 +62,7 @@ export class KaiOS {
         request.onerror = () => reject(request.error);
       });
     },
-    delete: (
-      storageName: StorageName,
-      filePathAndName: string
-    ): Promise<void> => {
+    delete: (storageName: StorageName, filePathAndName: string): Promise<void> => {
       return new Promise((resolve, reject) => {
         const storage = this.navigator.getDeviceStorage(storageName);
         const request = storage.delete(filePathAndName);
@@ -88,7 +82,6 @@ export class KaiOS {
             return;
           }
 
-          console.log('file result', this.result);
           const match = this.result.name.match(regex);
           if (match) {
             files.push({

@@ -3,11 +3,14 @@
   import { onDestroy, onMount } from 'svelte';
   import { push, querystring, replace } from 'svelte-spa-router';
   import { Core } from '../services/core';
+  import { selectedId } from '../stores/selectedId';
   import Input from '../ui-components/Input.svelte';
   import ListItem from '../ui-components/ListItem.svelte';
+  import Typography from '../ui-components/Typography.svelte';
   import View from '../ui-components/View.svelte';
 
   let searchResults: SearchResult[] = [];
+  let searching = false;
 
   onMount(() => {
     const q = new URLSearchParams($querystring).get('query');
@@ -16,11 +19,9 @@
     }
   });
 
-  let selectedId: string;
   let query: string;
   const queryUnsub = querystring.subscribe((val) => {
     const params = new URLSearchParams(val);
-    selectedId = params.get('selected');
     query = params.get('query');
   });
   onDestroy(queryUnsub);
@@ -32,19 +33,27 @@
   }
 
   async function search() {
+    if (searching) return;
+
+    searching = true;
+    searchResults = [];
     searchResults = await Core.podcasts.search(query);
+    searching = false;
   }
 </script>
 
 <View
   headerText="Search"
-  centerText={!selectedId ? '' : selectedId === 'search' ? 'Search' : 'Select'}
+  centerText={!$selectedId ? '' : $selectedId === 'search' ? 'Search' : 'Select'}
   menuItems={[
     {
       id: 'menu_clear',
       label: 'Clear search',
       closeAfterAction: true,
-      action: () => console.log('clear search'),
+      action: () => {
+        searchResults = [];
+        replace(`/search`);
+      },
     },
   ]}
 >
@@ -59,6 +68,9 @@
       on:input={handleSearchInput}
     />
   </div>
+  {#if searching}
+    <Typography>Searching...</Typography>
+  {/if}
   {#each searchResults as result (result.podexId)}
     <ListItem
       title={result.title}
