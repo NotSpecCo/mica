@@ -101,7 +101,7 @@
       }}
     />
   {/if}
-  <Typography type="titleSmall">What's new?</Typography>
+  <Typography type="titleSmall">Today</Typography>
   {#if !newEpisodes}
     <Typography>Checking for new episodes...</Typography>
   {:else}
@@ -115,7 +115,7 @@
         }}
       />
     {:else}
-      <Typography>Nothing new today</Typography>
+      <Typography>Nothing new</Typography>
     {/each}
   {/if}
   <Typography type="titleSmall">Episodes</Typography>
