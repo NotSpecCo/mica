@@ -1,18 +1,9 @@
 <script lang="ts">
   import Router from 'svelte-spa-router';
+  import { wrap } from 'svelte-spa-router/wrap';
   import AudioPlayer from './components/AudioPlayer.svelte';
   import { TextSize } from './models';
-  import About from './routes/About.svelte';
-  import EpisodeDetail from './routes/EpisodeDetail.svelte';
-  import Filter from './routes/Filter.svelte';
   import Home from './routes/Home.svelte';
-  import Import from './routes/Import.svelte';
-  import Player from './routes/Player.svelte';
-  import PodcastDetail from './routes/PodcastDetail.svelte';
-  import PodcastPreview from './routes/PodcastPreview.svelte';
-  import Podcasts from './routes/Podcasts.svelte';
-  import Search from './routes/Search.svelte';
-  import Settings from './routes/Settings.svelte';
   import { settings } from './stores/settings';
 
   $: {
@@ -45,16 +36,47 @@
 
   const routes = {
     '/': Home,
-    '/podcasts': Podcasts,
-    '/podcasts/import': Import,
-    '/podcasts/preview': PodcastPreview,
-    '/podcasts/:podcastId': PodcastDetail,
-    '/episodes/filter/:filterId': Filter,
-    '/episodes/:episodeId': EpisodeDetail,
-    '/search': Search,
-    '/player': Player,
-    '/settings': Settings,
-    '/about': About,
+    '/podcasts': wrap({
+      asyncComponent: () => import('./routes/Podcasts.svelte'),
+    }),
+    '/podcasts/import': wrap({
+      asyncComponent: () => import('./routes/Import.svelte'),
+    }),
+    '/podcasts/preview': wrap({
+      asyncComponent: () => import('./routes/PodcastPreview.svelte'),
+    }),
+    '/podcasts/:podcastId': wrap({
+      asyncComponent: () => import('./routes/PodcastDetail.svelte'),
+    }),
+    '/episodes/filter/:filterId': wrap({
+      asyncComponent: () => import('./routes/Filter.svelte'),
+    }),
+    '/episodes/:episodeId': wrap({
+      asyncComponent: () => import('./routes/EpisodeDetail.svelte'),
+    }),
+    '/search': wrap({
+      asyncComponent: () => import('./routes/Search.svelte'),
+    }),
+    '/player': wrap({
+      asyncComponent: () => import('./routes/Player.svelte'),
+    }),
+    '/settings': wrap({
+      asyncComponent: () => import('./routes/Settings.svelte'),
+    }),
+    '/about': wrap({
+      asyncComponent: () => import('./routes/About.svelte'),
+    }),
+
+    // '/podcasts': Podcasts,
+    // '/podcasts/import': Import,
+    // '/podcasts/preview': PodcastPreview,
+    // '/podcasts/:podcastId': PodcastDetail,
+    // '/episodes/filter/:filterId': Filter,
+    // '/episodes/:episodeId': EpisodeDetail,
+    // '/search': Search,
+    // '/player': Player,
+    // '/settings': Settings,
+    // '/about': About,
   };
 </script>
 

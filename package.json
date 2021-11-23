@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
+    "build:kaios2": "LEGACY=true rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
+    "dev:kaios2": "LEGACY=true rollup -c -w",
+    "start": "sirv dist --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
@@ -29,7 +31,9 @@
     "@tsconfig/svelte": "^2.0.0",
     "rollup": "^2.3.4",
     "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",

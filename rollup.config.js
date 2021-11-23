@@ -9,8 +9,13 @@ import css from 'rollup-plugin-css-only';
 import babel from 'rollup-plugin-babel';
 import replace from '@rollup/plugin-replace';
 import json from '@rollup/plugin-json';
+import del from 'rollup-plugin-delete';
+import copy from 'rollup-plugin-copy';
 
 const production = !process.env.ROLLUP_WATCH;
+const kaios2 = !!process.env.LEGACY;
+
+console.log(`Building for KaiOS v${kaios2 ? '2.x' : '3.x'}`);
 
 function serve() {
   let server;
@@ -37,12 +42,32 @@ export default {
   input: 'src/main.ts',
   output: {
     sourcemap: !production,
-    format: 'iife',
+    format: kaios2 ? 'iife' : 'es',
     name: 'app',
-    file: 'public/build/bundle.js',
+    dir: 'dist/build',
+    inlineDynamicImports: kaios2,
   },
   context: 'window',
   plugins: [
+    production && del({ targets: 'dist' }),
+    copy({
+      targets: [
+        { src: 'public/*', dest: 'dist' },
+        {
+          src: 'public/index.html',
+          dest: 'dist',
+          transform: (contents, filename) =>
+            contents
+              .toString()
+              .replace(
+                '<!-- rollup_script -->',
+                kaios2
+                  ? "<script defer src='/build/main.js'></script>"
+                  : "<script defer src='/build/main.js' type='module'></script>"
+              ),
+        },
+      ],
+    }),
     svelte({
       preprocess: sveltePreprocess({
         sourceMap: !production,
@@ -114,7 +139,7 @@ export default {
 
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
-    !production && livereload('public'),
+    !production && livereload('dist'),
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
