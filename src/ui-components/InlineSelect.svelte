@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { IconSize } from '../enums/icon';
   import { onKeyPress } from '../hooks/onKeyPress';
   import type { Option, Selectable } from '../models';
   import { selectedId } from '../stores/selectedId';
   import { getIndexWrap } from '../utils';
-  import Icon, { IconSize } from './Icon.svelte';
+  import Icon from './Icon.svelte';
   import SelectableBase from './SelectableBase.svelte';
 
   export let label: string;

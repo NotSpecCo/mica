@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { Selectable } from '../models';
-  import Icon, { IconName, IconSize } from './Icon.svelte';
+  import { IconSize } from '../enums/icon';
+  import type { IconName, Selectable } from '../models';
+  import Icon from './Icon.svelte';
   import SelectableBase from './SelectableBase.svelte';
 
   export let icon: IconName = undefined;

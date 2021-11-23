@@ -1,5 +1,5 @@
 import type { EpisodeExtended } from 'foxcasts-core/lib/types';
-import type { IconName } from '../ui-components/Icon.svelte';
+import type { IconName } from './IconName';
 
 export type LineOptions = keyof Pick<
   EpisodeExtended,

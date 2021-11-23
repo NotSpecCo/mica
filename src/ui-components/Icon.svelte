@@ -1,38 +1,7 @@
-<script context="module" lang="ts">
-  export type IconName =
-    | 'chevronUp'
-    | 'chevronDown'
-    | 'chevronLeft'
-    | 'chevronRight'
-    | 'cancel'
-    | 'settings'
-    | 'info'
-    | 'play'
-    | 'time'
-    | 'favorite'
-    | 'list'
-    | 'menu'
-    | 'moreVert'
-    | 'search'
-    // Old
-    | 'download'
-    | 'grid'
-    | 'home'
-    | 'filter';
-
-  export enum IconSize {
-    Small = 18,
-    Medium = 24,
-    Large = 36,
-  }
-
-  export enum IconColor {
-    Light = '#ffffff',
-    Dark = '#000000',
-  }
-</script>
-
 <script lang="ts">
+  import { IconColor, IconSize } from '../enums/icon';
+  import type { IconName } from '../models';
+
   export let icon: IconName;
   export let size: IconSize | string = IconSize.Medium;
   export let color: IconColor | string = 'var(--primary-text-color)';

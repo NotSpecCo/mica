@@ -1,4 +1,5 @@
 export * from './FilterViewOptions';
+export * from './IconName';
 export * from './MenuItem';
 export * from './OpmlFeed';
 export * from './OpmlFile';

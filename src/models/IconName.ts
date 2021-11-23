@@ -1,0 +1,20 @@
+export type IconName =
+  | 'chevronUp'
+  | 'chevronDown'
+  | 'chevronLeft'
+  | 'chevronRight'
+  | 'cancel'
+  | 'settings'
+  | 'info'
+  | 'play'
+  | 'time'
+  | 'favorite'
+  | 'list'
+  | 'menu'
+  | 'moreVert'
+  | 'search'
+  // Old
+  | 'download'
+  | 'grid'
+  | 'home'
+  | 'filter';
