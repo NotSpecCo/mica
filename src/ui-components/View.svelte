@@ -135,7 +135,7 @@
     text-align: center;
     font-size: 1.5rem;
     font-weight: 700;
-    padding: 5px;
+    padding: 2px 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
