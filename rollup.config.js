@@ -76,14 +76,14 @@ export default {
         dev: !production,
       },
     }),
-    esbuild({
-      target: 'ES2015',
-      loaders: {
-        '.js': 'js',
-        '.ts': 'ts',
-        '.json': 'json',
-      },
-    }),
+    // esbuild({
+    //   target: 'ES2015',
+    //   loaders: {
+    //     '.js': 'js',
+    //     '.ts': 'ts',
+    //     '.json': 'json',
+    //   },
+    // }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
     css({ output: 'main.css' }),
@@ -128,10 +128,10 @@ export default {
       dedupe: ['svelte'],
     }),
     commonjs(),
-    // typescript({
-    //   sourceMap: !production,
-    //   inlineSources: !production,
-    // }),
+    typescript({
+      sourceMap: !production,
+      inlineSources: !production,
+    }),
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
