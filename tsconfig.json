@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-  "compilerOptions": { "resolveJsonModule": true },
+  "compilerOptions": { "resolveJsonModule": true, "isolatedModules": true, "target": "ES6" },
 
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]

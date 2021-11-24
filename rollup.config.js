@@ -11,9 +11,10 @@ import replace from '@rollup/plugin-replace';
 import json from '@rollup/plugin-json';
 import del from 'rollup-plugin-delete';
 import copy from 'rollup-plugin-copy';
+import esbuild from 'rollup-plugin-esbuild';
 
 const production = !process.env.ROLLUP_WATCH;
-const kaios2 = !!process.env.LEGACY;
+const kaios2 = true;
 
 console.log(`Building for KaiOS v${kaios2 ? '2.x' : '3.x'}`);
 
@@ -60,7 +61,7 @@ export default {
             contents
               .toString()
               .replace(
-                '<!-- rollup_script -->',
+                `<script src="/build/main.js" type="module"></script>`,
                 kaios2
                   ? "<script defer src='/build/main.js'></script>"
                   : "<script defer src='/build/main.js' type='module'></script>"
@@ -69,24 +70,23 @@ export default {
       ],
     }),
     svelte({
-      preprocess: sveltePreprocess({
-        sourceMap: !production,
-        typescript: {
-          compilerOptions: {
-            target: 'ES2015',
-            module: 'ES2015',
-          },
-        },
-        replace: [[/process\.env\.(\w+)/g, (_, prop) => JSON.stringify(process.env[prop])]],
-      }),
+      preprocess: sveltePreprocess(),
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
       },
     }),
+    esbuild({
+      target: 'ES2015',
+      loaders: {
+        '.js': 'js',
+        '.ts': 'ts',
+        '.json': 'json',
+      },
+    }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
-    css({ output: 'bundle.css' }),
+    css({ output: 'main.css' }),
 
     babel({
       extensions: ['.js', '.ts', '.mjs', '.html', '.svelte'],
@@ -128,10 +128,10 @@ export default {
       dedupe: ['svelte'],
     }),
     commonjs(),
-    typescript({
-      sourceMap: !production,
-      inlineSources: !production,
-    }),
+    // typescript({
+    //   sourceMap: !production,
+    //   inlineSources: !production,
+    // }),
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
@@ -143,7 +143,7 @@ export default {
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terser(),
+    // production && terser(),
   ],
   watch: {
     clearScreen: false,
