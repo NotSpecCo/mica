@@ -97,15 +97,18 @@ export default {
           '@babel/preset-env',
           {
             targets: { firefox: '48' },
+            exclude: ['@babel/plugin-transform-regenerator'],
           },
         ],
       ],
       plugins: [
         '@babel/plugin-syntax-dynamic-import',
+        'babel-plugin-transform-async-to-promises',
         [
           '@babel/plugin-transform-runtime',
           {
             useESModules: true,
+            regenerator: false,
           },
         ],
       ],
